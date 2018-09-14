@@ -184,6 +184,7 @@ def step2_nuisanceRegression(nproc=5, model='24pXaCompCorXVolterra',spikeReg=Fal
         # Iterate through each run
         for run in allRuns:
             print 'Running regression on subject', subj, '| run', run
+            print '\tModel:', model, 'with spikeReg:', spikeReg, '| zscore:=', zscore
             ## Load in data to be preprocessed - This needs to be a space x time 2d array
             inputfile = datadir + '/hcpPreprocessedData/' + subj + '_GlasserParcellated_' + run + '_LR.csv'
             # Load data
@@ -347,6 +348,9 @@ def _nuisanceRegression(subj, run, inputdata, outputdir,  model='24pXaCompCorXVo
             print 'Spike regression option was chosen... but no motion spikes for subj', subj, '| run', run, '!'
         # Update the model name - to keep track of different model types for output naming
         model = model + '_spikeReg' 
+
+    if zscore:
+        model = model + '_zscore'
 
     h5f.close()
     # Skip first 5 frames of nuisanceRegressors, too
